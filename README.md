@@ -32,6 +32,9 @@ docker ps
 ```
 `nft-mariadb` 컨테이너가 실행 중이면 정상입니다.
 
+개발 안할때는 `docker compose down` 로 도커를 꼭 꺼주셔야 
+이미지가 계속 돌지 않아 컴퓨터가 느려지지 않습니다.
+
 DB 접속 정보는 아래와 같습니다.
 - Host: `localhost`
 - Port: `3306`
