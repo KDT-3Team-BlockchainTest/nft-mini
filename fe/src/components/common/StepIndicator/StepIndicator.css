@@ -1,0 +1,93 @@
+.step-indicator {
+  width: min(100%, 920px);
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.step-indicator__item {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.step-indicator__item:last-child {
+  flex: 0 0 auto;
+}
+
+.step-indicator__top {
+  display: flex;
+  align-items: center;
+}
+
+.step-indicator__circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #e4e7ec;
+  color: #667085;
+  font-size: 28px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-indicator__circle.is-active {
+  background: linear-gradient(135deg, #8b2cf5, #ec0b7b);
+  color: #ffffff;
+}
+
+.step-indicator__line {
+  flex: 1;
+  height: 2px;
+  background: #d0d5dd;
+  margin-left: 16px;
+}
+
+.step-indicator__label {
+  margin-top: 14px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #475467;
+  text-align: left;
+}
+
+@media (max-width: 1024px) {
+  .step-indicator {
+    gap: 16px;
+  }
+
+  .step-indicator__circle {
+    width: 52px;
+    height: 52px;
+    font-size: 22px;
+  }
+
+  .step-indicator__label {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .step-indicator {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .step-indicator__item {
+    width: 100%;
+  }
+
+  .step-indicator__top {
+    align-items: center;
+  }
+
+  .step-indicator__line {
+    display: none;
+  }
+
+  .step-indicator__label {
+    margin-top: 10px;
+  }
+}

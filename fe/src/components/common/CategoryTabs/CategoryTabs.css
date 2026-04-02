@@ -1,0 +1,29 @@
+.category-tabs {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.category-tabs__item {
+  height: 48px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 16px;
+  background: #eceef2;
+  color: #344054;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.category-tabs__item.is-active {
+  background: linear-gradient(135deg, #8b2cf5, #ec0b7b);
+  color: #fff;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .category-tabs__item {
+    font-size: 16px;
+  }
+}

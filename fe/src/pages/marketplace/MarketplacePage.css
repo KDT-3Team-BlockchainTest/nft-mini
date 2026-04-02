@@ -1,0 +1,177 @@
+.marketplace-page {
+  min-height: 100vh;
+  background: #f7f7f8;
+  color: #101828;
+}
+
+.marketplace__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 36px;
+}
+
+.marketplace__hero {
+  padding: 44px 0 24px;
+}
+
+.marketplace__title {
+  margin: 0;
+  font-size: 64px;
+  line-height: 1.15;
+  font-weight: 800;
+  color: #101828;
+}
+
+.marketplace__desc {
+  margin: 16px 0 36px;
+  font-size: 22px;
+  color: #475467;
+}
+
+.marketplace__content {
+  padding: 20px 0 96px;
+}
+
+.marketplace__layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.marketplace__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.marketplace__price-range {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.marketplace__price-input {
+  width: 116px;
+  height: 56px;
+  border: 1px solid #d0d5dd;
+  border-radius: 16px;
+  padding: 0 16px;
+  font-size: 22px;
+  outline: none;
+}
+
+.marketplace__price-separator {
+  font-size: 20px;
+  color: #667085;
+}
+
+.marketplace__price-unit {
+  color: #667085;
+  font-size: 18px;
+}
+
+.marketplace__check {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 18px;
+  color: #344054;
+}
+
+.marketplace__check input {
+  width: 22px;
+  height: 22px;
+}
+
+.marketplace__main {
+  min-width: 0;
+}
+
+.marketplace__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.marketplace__count {
+  margin: 0;
+  font-size: 20px;
+  color: #475467;
+}
+
+.marketplace__count strong {
+  color: #101828;
+}
+
+.marketplace__sort {
+  min-width: 180px;
+  height: 56px;
+  border: 1px solid #d0d5dd;
+  border-radius: 16px;
+  background: #fff;
+  padding: 0 18px;
+  font-size: 18px;
+  color: #101828;
+  outline: none;
+}
+
+.marketplace__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+
+@media (max-width: 1280px) {
+  .marketplace__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .marketplace__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .marketplace__sidebar {
+    order: 2;
+  }
+
+  .marketplace__main {
+    order: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .marketplace__container {
+    padding: 0 20px;
+  }
+
+  .marketplace__title {
+    font-size: 42px;
+  }
+
+  .marketplace__desc {
+    font-size: 18px;
+    margin-bottom: 24px;
+  }
+
+  .marketplace__toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .marketplace__sort {
+    width: 100%;
+  }
+
+  .marketplace__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .marketplace__price-input {
+    width: 100%;
+  }
+}

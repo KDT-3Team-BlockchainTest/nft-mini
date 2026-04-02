@@ -1,0 +1,141 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: #f7f7f8;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+  background: #fff;
+  border: 1px solid #e4e7ec;
+  border-radius: 24px;
+  padding: 36px 32px;
+  box-shadow: 0 12px 32px rgba(16, 24, 40, 0.08);
+}
+
+.auth-card--wide {
+  max-width: 520px;
+}
+
+.auth-card__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  margin-bottom: 24px;
+}
+
+.auth-card__logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #8b2cf5, #ec0b7b);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.auth-card__brand-text {
+  font-size: 24px;
+  font-weight: 800;
+  color: #101828;
+}
+
+.auth-card__title {
+  margin: 0 0 24px;
+  font-size: 36px;
+  font-weight: 800;
+  color: #101828;
+  text-align: center;
+}
+
+.auth-form {
+  display: grid;
+  gap: 14px;
+}
+
+.auth-form__input {
+  width: 100%;
+  height: 56px;
+  padding: 0 16px;
+  border: 1px solid #d0d5dd;
+  border-radius: 16px;
+  background: #fff;
+  color: #101828;
+  font-size: 16px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.auth-form__input:focus {
+  border-color: #8b2cf5;
+}
+
+.auth-form__options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+  color: #475467;
+}
+
+.auth-form__check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #475467;
+  font-size: 14px;
+}
+
+.auth-form__text-btn {
+  border: none;
+  background: transparent;
+  color: #667085;
+  cursor: pointer;
+}
+
+.auth-form__submit {
+  width: 100%;
+  height: 56px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #8b2cf5, #ec0b7b);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.auth-form__sub-btn {
+  width: 100%;
+  height: 56px;
+  border: 1px solid #d0d5dd;
+  border-radius: 16px;
+  background: #fff;
+  color: #101828;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-card__footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #667085;
+}
+
+.auth-card__footer a {
+  color: #8b2cf5;
+  text-decoration: none;
+  font-weight: 700;
+}
