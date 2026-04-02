@@ -1,6 +1,9 @@
 import "./NftCard.css";
+import { useNavigate } from "react-router-dom";
 
-export default function NftCard({ image, badge, title, creator, price }) {
+export default function NftCard({ id, image, badge, title, creator, price }) {
+  const navigate = useNavigate();
+
   return (
     <article className="nft-card">
       <div className="nft-card__image-wrap">
@@ -20,7 +23,11 @@ export default function NftCard({ image, badge, title, creator, price }) {
             <span className="nft-card__label">가격</span>
             <strong className="nft-card__price">{price}</strong>
           </div>
-          <button type="button" className="nft-card__view-btn">
+          <button
+            type="button"
+            className="nft-card__view-btn"
+            onClick={() => id && navigate(`/artworks/${id}`)}
+          >
             보기
           </button>
         </div>

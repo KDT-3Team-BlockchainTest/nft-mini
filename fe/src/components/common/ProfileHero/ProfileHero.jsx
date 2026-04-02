@@ -9,7 +9,7 @@ export default function ProfileHero({
 }) {
   return (
     <section className="profile-hero">
-      <div className="profile-hero__avatar">?뫀</div>
+      <div className="profile-hero__avatar">◉</div>
 
       <div className="profile-hero__content">
         <div className="profile-hero__top">
@@ -20,20 +20,20 @@ export default function ProfileHero({
             className="profile-hero__edit-btn"
             onClick={onEditProfile}
           >
-            ??
+            수정
           </button>
         </div>
 
         <p className="profile-hero__description">{description}</p>
 
         <div className="profile-hero__wallet-row">
-          <div className="profile-hero__wallet-chip">??{walletAddress}</div>
+          <div className="profile-hero__wallet-chip">지갑 {walletAddress || "미연결"}</div>
           <button
             type="button"
             className="profile-hero__copy-btn"
             onClick={onCopyAddress}
           >
-            二쇱냼 蹂듭궗
+            주소 복사
           </button>
         </div>
       </div>

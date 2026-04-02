@@ -1,5 +1,6 @@
 import "./Header.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const guestNavItems = [
   { key: "home", label: "홈", icon: "⌂", path: "/" },
@@ -19,13 +20,17 @@ const adminNavItems = [
 
 export default function Header({
   activeMenu = "home",
-  isLoggedIn = false,
-  userRole = "GUEST",
-  userName = "내 계정",
+  isLoggedIn: isLoggedInProp,
+  userRole: userRoleProp,
+  userName: userNameProp,
   onWalletClick,
   onLogout,
 }) {
   const navigate = useNavigate();
+  const { isLoggedIn: authLoggedIn, user, logout } = useAuth();
+  const isLoggedIn = isLoggedInProp ?? authLoggedIn;
+  const userRole = userRoleProp ?? user?.role ?? "GUEST";
+  const userName = userNameProp ?? user?.nickname ?? "내 계정";
 
   const navItems = [
     ...(isLoggedIn ? memberNavItems : guestNavItems),
@@ -38,7 +43,16 @@ export default function Header({
       return;
     }
 
-    console.log("logout");
+    logout().then(() => navigate("/"));
+  };
+
+  const handleWalletConnect = async () => {
+    if (onWalletClick) {
+      onWalletClick();
+      return;
+    }
+
+    window.alert("지갑 연결은 Stage 2 블록체인 연동 단계에서 지원합니다.");
   };
 
   return (
@@ -100,7 +114,7 @@ export default function Header({
           <button
             type="button"
             className="header__wallet-btn"
-            onClick={onWalletClick}
+            onClick={handleWalletConnect}
           >
             <span className="header__wallet-icon">□</span>
             <span>지갑 연결</span>

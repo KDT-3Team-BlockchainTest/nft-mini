@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../components/layout/header/Header";
 import Footer from "../../components/layout/footer/Footer";
 import NftCard from "../../components/common/NftCard/NftCard";
@@ -6,6 +6,9 @@ import SearchBar from "../../components/common/SearchBar/SearchBar";
 import CategoryTabs from "../../components/common/CategoryTabs/CategoryTabs";
 import FilterCard from "../../components/common/FilterCard/FilterCard";
 import Pagination from "../../components/common/Pagination/Pagination";
+import LoadingState from "../../components/common/LoadingState";
+import ErrorState from "../../components/common/ErrorState";
+import { api } from "../../lib/api";
 import "./MarketplacePage.css";
 
 const categoryItems = [
@@ -16,84 +19,42 @@ const categoryItems = [
   { key: "prompt", label: "프롬프트" },
 ];
 
-const nftItems = [
-  {
-    image:
-      "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=900&q=80",
-    badge: "트렌딩",
-    title: "네온 드림",
-    creator: "PixelMaster",
-    price: "2.5 ETH",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1633419461186-7d40a38105ec?auto=format&fit=crop&w=900&q=80",
-    badge: "새로운",
-    title: "추상 차원",
-    creator: "CyberArt",
-    price: "1.8 ETH",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=900&q=80",
-    badge: "판매중",
-    title: "사이버 리얼리티",
-    creator: "FutureGen",
-    price: "3.2 ETH",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1557672172-298e090bd0f1?auto=format&fit=crop&w=900&q=80",
-    badge: "",
-    title: "기하학적 흐름",
-    creator: "VectorAI",
-    price: "1.5 ETH",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=900&q=80",
-    badge: "새로운",
-    title: "홀로그래픽 뷰",
-    creator: "PrismAI",
-    price: "2.1 ETH",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=900&q=80",
-    badge: "트렌딩",
-    title: "네온 시티스케이프",
-    creator: "UrbanArt",
-    price: "4.5 ETH",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=900&q=80",
-    badge: "",
-    title: "컬러 버스트",
-    creator: "ChromaAI",
-    price: "1.9 ETH",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80",
-    badge: "판매중",
-    title: "디지털 호라이즌",
-    creator: "LandscapeGen",
-    price: "2.7 ETH",
-  },
-];
-
 export default function MarketplacePage() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
+  const [keyword, setKeyword] = useState("");
+  const [minPrice, setMinPrice] = useState("0");
+  const [maxPrice, setMaxPrice] = useState("10");
+  const [sort, setSort] = useState("trending");
+  const [marketData, setMarketData] = useState(null);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const params = new URLSearchParams({
+      category: activeCategory,
+      sort,
+      page: String(currentPage - 1),
+      size: "8",
+      minPrice,
+      maxPrice,
+    });
+
+    if (keyword.trim()) {
+      params.set("keyword", keyword.trim());
+    }
+
+    api
+      .get(`/api/marketplace/nfts?${params.toString()}`)
+      .then((data) => {
+        setMarketData(data);
+        setError("");
+      })
+      .catch((loadError) => setError(loadError.message));
+  }, [activeCategory, currentPage, keyword, maxPrice, minPrice, sort]);
 
   return (
     <div className="marketplace-page">
-      <Header
-        activeMenu="marketplace"
-        onMenuClick={(menu) => console.log(menu)}
-        onWalletClick={() => console.log("wallet connect")}
-      />
+      <Header activeMenu="marketplace" />
 
       <main className="marketplace">
         <section className="marketplace__hero">
@@ -105,7 +66,10 @@ export default function MarketplacePage() {
 
             <SearchBar
               placeholder="NFT, 크리에이터, 컬렉션 검색..."
-              onFilterClick={() => console.log("filter")}
+              value={keyword}
+              onChange={setKeyword}
+              onSubmit={() => setCurrentPage(1)}
+              onFilterClick={() => setCurrentPage(1)}
             />
 
             <CategoryTabs
@@ -124,13 +88,15 @@ export default function MarketplacePage() {
                   <input
                     className="marketplace__price-input"
                     type="text"
-                    defaultValue="0"
+                    value={minPrice}
+                    onChange={(event) => setMinPrice(event.target.value)}
                   />
                   <span className="marketplace__price-separator">-</span>
                   <input
                     className="marketplace__price-input"
                     type="text"
-                    defaultValue="10"
+                    value={maxPrice}
+                    onChange={(event) => setMaxPrice(event.target.value)}
                   />
                 </div>
                 <span className="marketplace__price-unit">ETH</span>
@@ -178,10 +144,14 @@ export default function MarketplacePage() {
             <div className="marketplace__main">
               <div className="marketplace__toolbar">
                 <p className="marketplace__count">
-                  <strong>8개</strong> 아이템 발견
+                  <strong>{marketData?.totalCount ?? 0}개</strong> 아이템 발견
                 </p>
 
-                <select className="marketplace__sort" defaultValue="trending">
+                <select
+                  className="marketplace__sort"
+                  value={sort}
+                  onChange={(event) => setSort(event.target.value)}
+                >
                   <option value="trending">트렌딩</option>
                   <option value="latest">최신순</option>
                   <option value="priceLow">낮은 가격순</option>
@@ -189,9 +159,11 @@ export default function MarketplacePage() {
                 </select>
               </div>
 
+              {!marketData && !error ? <LoadingState /> : null}
+              {error ? <ErrorState message={error} /> : null}
               <div className="marketplace__grid">
-                {nftItems.map((item) => (
-                  <NftCard key={item.title} {...item} />
+                {marketData?.items?.map((item) => (
+                  <NftCard key={item.id} {...item} />
                 ))}
               </div>
             </div>
@@ -199,7 +171,7 @@ export default function MarketplacePage() {
           <div className="marketplace__pagination-wrap">
             <Pagination
               current={currentPage}
-              total={8}
+              total={Math.max(1, Math.ceil((marketData?.totalCount ?? 0) / 8))}
               onChange={setCurrentPage}
             />
           </div>

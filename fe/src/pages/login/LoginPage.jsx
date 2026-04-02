@@ -1,7 +1,36 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import { api } from "../../lib/api";
 import "./LoginPage.css";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+  const { setUser } = useAuth();
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (field) => (event) => {
+    setForm((prev) => ({ ...prev, [field]: event.target.value }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setError("");
+    setIsSubmitting(true);
+
+    try {
+      const user = await api.post("/api/auth/login", form);
+      setUser(user);
+      navigate("/");
+    } catch (submitError) {
+      setError(submitError.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <main className="auth-page">
       <section className="auth-card">
@@ -12,16 +41,20 @@ export default function LoginPage() {
 
         <h1 className="auth-card__title">로그인</h1>
 
-        <form className="auth-form">
+        <form className="auth-form" onSubmit={handleSubmit}>
           <input
             className="auth-form__input"
             type="email"
             placeholder="이메일"
+            value={form.email}
+            onChange={handleChange("email")}
           />
           <input
             className="auth-form__input"
             type="password"
             placeholder="비밀번호"
+            value={form.password}
+            onChange={handleChange("password")}
           />
 
           <div className="auth-form__options">
@@ -35,12 +68,14 @@ export default function LoginPage() {
             </button>
           </div>
 
+          {error ? <p className="auth-form__error">{error}</p> : null}
+
           <button type="submit" className="auth-form__submit">
-            로그인
+            {isSubmitting ? "로그인 중..." : "로그인"}
           </button>
 
-          <button type="button" className="auth-form__sub-btn">
-            MetaMask로 로그인
+          <button type="button" className="auth-form__sub-btn" disabled>
+            Stage 2: MetaMask 로그인
           </button>
         </form>
 

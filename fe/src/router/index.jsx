@@ -6,6 +6,7 @@ import MyPage from "../pages/mypage/MyPage";
 import LoginPage from "../pages/login/LoginPage";
 import SignupPage from "../pages/signup/SignupPage";
 import AdminPage from "../pages/admin/AdminPage";
+import ArtworkDetailPage from "../pages/artwork/ArtworkDetailPage";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <AdminPage />,
+  },
+  {
+    path: "/artworks/:artworkId",
+    element: <ArtworkDetailPage />,
   },
 ]);
 

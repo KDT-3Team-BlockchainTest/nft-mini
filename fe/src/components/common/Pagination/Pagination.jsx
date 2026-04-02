@@ -5,12 +5,17 @@ export default function Pagination({
   total = 5,
   onChange,
 }) {
-  const pages = Array.from({ length: total }, (_, i) => i + 1);
+  const pages = Array.from({ length: Math.max(total, 1) }, (_, i) => i + 1);
 
   return (
     <div className="pagination">
-      <button type="button" className="pagination__btn">
-        ?댁쟾
+      <button
+        type="button"
+        className="pagination__btn"
+        disabled={current <= 1}
+        onClick={() => onChange?.(current - 1)}
+      >
+        이전
       </button>
 
       {pages.map((page) => (
@@ -24,8 +29,13 @@ export default function Pagination({
         </button>
       ))}
 
-      <button type="button" className="pagination__btn">
-        ?ㅼ쓬
+      <button
+        type="button"
+        className="pagination__btn"
+        disabled={current >= total}
+        onClick={() => onChange?.(current + 1)}
+      >
+        다음
       </button>
     </div>
   );
